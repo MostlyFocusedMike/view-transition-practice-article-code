@@ -1,3 +1,14 @@
+const setTransitionName = (name) => {
+  document.documentElement.dataset.page = name
+}
+
+const enterLeft_fadeOut = 'enter-left-fade-out';
+const fadeIn_exitLeft = 'fade-in-exit-left';
+const enterRight_fadeOut = 'enter-right-fade-out';
+const fadeIn_exitRight = 'fade-in-exit-right';
+const enterRight_exitLeft = 'enter-right-exit-left';
+const enterLeft_exitRight = 'enter-left-exit-right';
+
 // OLD PAGE LOGIC
 window.addEventListener('pageswap', async (e) => {
   if (e.viewTransition) { }
@@ -5,7 +16,6 @@ window.addEventListener('pageswap', async (e) => {
 
 // NEW PAGE LOGIC
 window.addEventListener('pagereveal', async (e) => {
-  console.log('e reveal:', e);
   if (e.viewTransition) {
     const fromUrl = new URL(document.referrer);
     const currentUrl = new URL(location.href);
@@ -18,28 +28,13 @@ window.addEventListener('pagereveal', async (e) => {
     const isCurrentArticle = currentUrl.pathname.includes('article.html');
     const isCurrentAllArticles = currentUrl.pathname.includes('articles.html');
 
-    if (isFromHome && isCurrentArticle) {
-      document.documentElement.dataset.page = 'enter-left-fade-out';
-    }
+    if (isFromHome && isCurrentArticle) setTransitionName(enterLeft_fadeOut);
+    if (isFromArticle && isCurrentHome) setTransitionName(fadeIn_exitLeft);
 
-    if (isFromArticle && isCurrentHome) {
-      document.documentElement.dataset.page = 'fade-in-exit-left';
-    }
+    if (isFromHome && isCurrentAllArticles) setTransitionName(enterRight_fadeOut);
+    if (isFromAllArticles && isCurrentHome) setTransitionName(fadeIn_exitRight);
 
-    if (isFromHome && isCurrentAllArticles) {
-      document.documentElement.dataset.page = 'enter-right-fade-out';
-    }
-
-    if (isFromAllArticles && isCurrentHome) {
-      document.documentElement.dataset.page = 'fade-in-exit-right';
-    }
-
-    if (isFromArticle && isCurrentAllArticles) {
-      document.documentElement.dataset.page = 'enter-right-exit-left';
-    }
-
-    if (isFromAllArticles && isCurrentArticle) {
-      document.documentElement.dataset.page = 'enter-left-exit-right';
-    }
+    if (isFromAllArticles && isCurrentArticle) setTransitionName(enterLeft_exitRight);
+    if (isFromArticle && isCurrentAllArticles) setTransitionName(enterRight_exitLeft);
   }
 });

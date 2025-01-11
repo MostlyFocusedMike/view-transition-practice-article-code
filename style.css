@@ -105,16 +105,15 @@
   }
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
 
 header {
   background-color: green;
   padding: 1rem;
   view-transition-name: main-heading;
-}
-
-body {
-  margin: 0;
-  padding: 0;
 }
 
 main {
