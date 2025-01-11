@@ -14,16 +14,16 @@
   from { transform: translateX(100%); }
 }
 
-@keyframes slide-to-left {
-  to { transform: translateX(-100%); }
+@keyframes slide-to-right {
+  to { transform: translateX(100%); }
 }
 
 @keyframes slide-from-left {
   from { transform: translateX(-100%); }
 }
 
-@keyframes slide-to-right {
-  to { transform: translateX(100%); }
+@keyframes slide-to-left {
+  to { transform: translateX(-100%); }
 }
 
 
@@ -41,7 +41,7 @@
   background-color: black;
 }
 
-:root[data-page="article"] {
+:root[data-page="enter-left-fade-out"] {
   &::view-transition-old(page) {
     animation: 600ms cubic-bezier(0.4, 0, 0.2, 1) both fade-out;
   }
@@ -51,7 +51,7 @@
   }
 }
 
-:root[data-page="home"] {
+:root[data-page="fade-in-exit-left"] {
   &::view-transition-old(page) {
     animation: 600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
     z-index: 100;
@@ -63,6 +63,47 @@
   }
 }
 
+:root[data-page="fade-in-exit-right"] {
+  &::view-transition-old(page) {
+    animation: 600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-right;
+    z-index: 100;
+  }
+
+  &::view-transition-new(page) {
+    animation: 600ms cubic-bezier(0.4, 0, 0.2, 1) both fade-in;
+    z-index: 1;
+  }
+}
+
+:root[data-page="enter-right-fade-out"] {
+  &::view-transition-old(page) {
+    animation: 600ms cubic-bezier(0.4, 0, 0.2, 1) both fade-out;
+  }
+
+  &::view-transition-new(page) {
+    animation: 600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+  }
+}
+
+:root[data-page="enter-left-exit-right"] {
+  &::view-transition-old(page) {
+    animation: 600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-right;
+  }
+
+  &::view-transition-new(page) {
+    animation: 600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-left;
+  }
+}
+
+:root[data-page="enter-right-exit-left"] {
+  &::view-transition-old(page) {
+    animation: 600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+  }
+
+  &::view-transition-new(page) {
+    animation: 600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+  }
+}
 
 
 header {
@@ -79,10 +120,3 @@ body {
 main {
   view-transition-name: page;
 }
-/* #home-page {
-  view-transition-name: home-page;
-}
-
-#article-page {
-  view-transition-name: article-page;
-} */

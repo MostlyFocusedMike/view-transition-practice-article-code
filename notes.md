@@ -71,3 +71,21 @@ Also important to note, that the transition-new image will always be on top, so 
 
 You can control this data attribute manually (by doing `<html lang="en" data-page="article">`) or setting it with events.
 
+
+## It's about animations not pages
+You shouldn't define it like that though, because you have more than 2 pages, so you can't just go from x -> y, you need
+
+like "coming FROM article, means slide to left"
+
+
+home => all articles
+home -> article
+
+all articles => home ==
+all articles => article == slide from left
+
+slide-left-fade-in (old => slide to left, new => slide from right)
+article => home == slide to left
+
+
+article => articles == slide to left
