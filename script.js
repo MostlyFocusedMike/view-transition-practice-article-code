@@ -1,4 +1,4 @@
-const setTransitionName = (name) => {
+const setTransition = (name) => {
   document.documentElement.dataset.page = name
 }
 
@@ -9,32 +9,27 @@ const fadeIn_exitRight = 'fade-in-exit-right';
 const enterRight_exitLeft = 'enter-right-exit-left';
 const enterLeft_exitRight = 'enter-left-exit-right';
 
-// OLD PAGE LOGIC
-window.addEventListener('pageswap', async (e) => {
-  if (e.viewTransition) { }
-});
-
 // NEW PAGE LOGIC
 window.addEventListener('pagereveal', async (e) => {
-  if (e.viewTransition) {
-    const fromUrl = new URL(document.referrer);
-    const currentUrl = new URL(location.href);
+  if (!e.viewTransition) return;
 
-    const isFromHome = fromUrl.pathname.includes('index.html');
-    const isFromArticle = fromUrl.pathname.includes('article.html');
-    const isFromAllArticles = fromUrl.pathname.includes('articles.html');
+  const { pathname: oldPath } = new URL(document.referrer);
+  const { pathname: newPath } = new URL(location.href);
 
-    const isCurrentHome = currentUrl.pathname.includes('index.html');
-    const isCurrentArticle = currentUrl.pathname.includes('article.html');
-    const isCurrentAllArticles = currentUrl.pathname.includes('articles.html');
+  const wasHome = oldPath.includes('index.html');
+  const wasArticle = oldPath.includes('article.html');
+  const wasAllArticles = oldPath.includes('articles.html');
 
-    if (isFromHome && isCurrentArticle) setTransitionName(enterLeft_fadeOut);
-    if (isFromArticle && isCurrentHome) setTransitionName(fadeIn_exitLeft);
+  const isHome = newPath.includes('index.html');
+  const isArticlePage = newPath.includes('article.html');
+  const isAllArticlePage = newPath.includes('articles.html');
 
-    if (isFromHome && isCurrentAllArticles) setTransitionName(enterRight_fadeOut);
-    if (isFromAllArticles && isCurrentHome) setTransitionName(fadeIn_exitRight);
+  if (wasHome && isArticlePage) setTransition(enterLeft_fadeOut);
+  if (wasArticle && isHome) setTransition(fadeIn_exitLeft);
 
-    if (isFromAllArticles && isCurrentArticle) setTransitionName(enterLeft_exitRight);
-    if (isFromArticle && isCurrentAllArticles) setTransitionName(enterRight_exitLeft);
-  }
+  if (wasHome && isAllArticlePage) setTransition(enterRight_fadeOut);
+  if (wasAllArticles && isHome) setTransition(fadeIn_exitRight);
+
+  if (wasAllArticles && isArticlePage) setTransition(enterLeft_exitRight);
+  if (wasArticle && isAllArticlePage) setTransition(enterRight_exitLeft);
 });

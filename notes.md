@@ -65,6 +65,13 @@ so view transition groups go 1:1, like if you have an article page and a home pa
 }
 ```
 
+```js
+// OLD PAGE LOGIC
+window.addEventListener('pageswap', async (e) => {
+  if (e.viewTransition) { }
+});
+```
+
 Something very important to note is that the data attribute is the page you're *going to*. So on `data-page="article"`, the "old" page is the home page, and the new page is the article.
 
 Also important to note, that the transition-new image will always be on top, so if you want to alter that, you must use the z index.
@@ -89,3 +96,19 @@ article => home == slide to left
 
 
 article => articles == slide to left
+
+
+```css
+/* This is only ever be the background, never the overlay */
+::view-transition {
+  background-color: black;
+}
+
+::view-transition-old(root) {
+  animation: 700ms cubic-bezier(0.4, 0, 0.2, 1) both exit-left;
+}
+
+::view-transition-new(root) {
+  animation: 700ms cubic-bezier(0.4, 0, 0.2, 1) both enter-right;
+}
+```
